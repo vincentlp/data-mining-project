@@ -9,7 +9,9 @@ X = pd.read_csv(open('data/train_predictors.csv','rb'), sep=';')
 
 # print data.head()
 
-data_test = pd.read_csv(open('data/train_response.csv', 'rb'), sep=';')
+Y = pd.read_csv(open('data/train_response.csv', 'rb'), sep=';')
+
+X_test = pd.read_csv(open('data/test_modif.csv', 'rb'), sep=';')
 
 print "Nombre de modalites de la variable %s: %d" % ('Product_Info_1',len(X['Product_Info_1'].unique()))
 print "Nombre de modalites de la variable %s: %d" % ('Product_Info_2',len(X['Product_Info_2'].unique()))
@@ -84,3 +86,8 @@ for v in list_dummies:
 	del X[v]
 pd.set_option('max_columns', None)
 print X.head()
+
+
+# model = DecisionTreeRegressor()
+# model.fit(X, Y) # On fit le modèle sur le training set
+# Y_test = model.predict(X_test) # On effectue les prédictions sur le test set
