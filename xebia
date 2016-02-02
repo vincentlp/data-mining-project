@@ -1,0 +1,79 @@
+import pandas as pd
+from StringIO import StringIO
+from zipfile import ZipFile
+from urllib import urlopen
+
+import csv
+
+X = pd.read_csv(open('/Users/lecoguiec/Documents/TelecomBretagne/3A/FouilleDeDonnees/Projet/Datas/train_predictors.csv','rb'), sep=';')
+
+# print data.head()
+
+data_test = pd.read_csv(open('/Users/lecoguiec/Documents/TelecomBretagne/3A/FouilleDeDonnees/Projet/Datas/train_predictors.csv', 'rb'), sep=';')
+
+print "Nombre de modalites de la variable %s: %d" % ('Product_info_1',len(X['Product_info_1'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Product_info_2',len(X['Product_info_2'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Product_info_3',len(X['Product_info_3'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Product_info_5',len(X['Product_info_5'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Product_info_6',len(X['Product_info_6'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Product_info_7',len(X['Product_info_7'].unique()))
+
+print "Nombre de modalites de la variable %s: %d" % ('Employment_Info_2',len(X['Employment_Info_2'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Employment_Info_3',len(X['Employment_Info_3'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Employment_Info_5',len(X['Employment_Info_5'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_1',len(X['InsuredInfo_1'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_2',len(X['InsuredInfo_2'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_3',len(X['InsuredInfo_3'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_4',len(X['InsuredInfo_4'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_5',len(X['InsuredInfo_5'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_6',len(X['InsuredInfo_6'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_7',len(X['InsuredInfo_7'].unique()))
+
+print "Nombre de modalites de la variable %s: %d" % ('Insurance_History_1',len(X['Insurance_History_1'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Insurance_History_2',len(X['Insurance_History_2'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Insurance_History_3',len(X['Insurance_History_3'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Insurance_History_4',len(X['Insurance_History_4'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Insurance_History_7',len(X['Insurance_History_7'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Insurance_History_8',len(X['Insurance_History_8'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Insurance_History_9',len(X['Insurance_History_9'].unique()))
+
+print "Nombre de modalites de la variable %s: %d" % ('Family_Hist_1',len(X['Family_Hist_1'].unique()))
+
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_2',len(X['Medical_History_2'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_3',len(X['Medical_History_3'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_4',len(X['Medical_History_4'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_5',len(X['Medical_History_5'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_6',len(X['Medical_History_6'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_7',len(X['Medical_History_7'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_8',len(X['Medical_History_8'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_9',len(X['Medical_History_9'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_11',len(X['Medical_History_11'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_12',len(X['Medical_History_12'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_13',len(X['Medical_History_13'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_14',len(X['Medical_History_14'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_16',len(X['Medical_History_16'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_17',len(X['Medical_History_17'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_18',len(X['Medical_History_18'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_19',len(X['Medical_History_19'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_20',len(X['Medical_History_20'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_21',len(X['Medical_History_21'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_22',len(X['Medical_History_22'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_23',len(X['Medical_History_23'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_25',len(X['Medical_History_25'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_26',len(X['Medical_History_26'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_27',len(X['Medical_History_27'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_28',len(X['Medical_History_28'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_29',len(X['Medical_History_29'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_30',len(X['Medical_History_30'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_31',len(X['Medical_History_31'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_33',len(X['Medical_History_33'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_34',len(X['Medical_History_34'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_35',len(X['Medical_History_35'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_36',len(X['Medical_History_36'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_37',len(X['Medical_History_37'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_38',len(X['Medical_History_38'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_39',len(X['Medical_History_39'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_40',len(X['Medical_History_40'].unique()))
+print "Nombre de modalites de la variable %s: %d" % ('Medical_History_41',len(X['Medical_History_41'].unique()))
+
+
