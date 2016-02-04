@@ -1,16 +1,19 @@
+#!/usr/bin/python
+# coding: latin-1
+import os, sys
+
 import pandas as pd
+import numpy as np
 from StringIO import StringIO
 from zipfile import ZipFile
 from urllib import urlopen
-
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import Imputer
 import csv
 
 X = pd.read_csv(open('data/train_predictors.csv','rb'), sep=';')
-
 # print data.head()
-
 Y = pd.read_csv(open('data/train_response.csv', 'rb'), sep=';')
-
 X_test = pd.read_csv(open('data/test_modif.csv', 'rb'), sep=';')
 
 print "Nombre de modalites de la variable %s: %d" % ('Product_Info_1',len(X['Product_Info_1'].unique()))
@@ -23,6 +26,7 @@ print "Nombre de modalites de la variable %s: %d" % ('Product_Info_7',len(X['Pro
 print "Nombre de modalites de la variable %s: %d" % ('Employment_Info_2',len(X['Employment_Info_2'].unique()))
 print "Nombre de modalites de la variable %s: %d" % ('Employment_Info_3',len(X['Employment_Info_3'].unique()))
 print "Nombre de modalites de la variable %s: %d" % ('Employment_Info_5',len(X['Employment_Info_5'].unique()))
+
 print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_1',len(X['InsuredInfo_1'].unique()))
 print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_2',len(X['InsuredInfo_2'].unique()))
 print "Nombre de modalites de la variable %s: %d" % ('InsuredInfo_3',len(X['InsuredInfo_3'].unique()))
@@ -78,16 +82,29 @@ print "Nombre de modalites de la variable %s: %d" % ('Medical_History_39',len(X[
 print "Nombre de modalites de la variable %s: %d" % ('Medical_History_40',len(X['Medical_History_40'].unique()))
 print "Nombre de modalites de la variable %s: %d" % ('Medical_History_41',len(X['Medical_History_41'].unique()))
 
+print X.columns
+print X_test.columns
+X = X.drop('Product_Info_2', 1)
+X_test = X_test.drop('Product_Info_2', 1)
+print X.columns
+print X_test.columns
 
-list_dummies = ['Product_Info_1', 'Product_Info_2', 'Product_Info_3', 'Product_Info_5', 'Product_Info_6', 'Product_Info_7', 'Employment_Info_2', 'Employment_Info_3', 'Employment_Info_5', 'InsuredInfo_1', 'InsuredInfo_2', 'InsuredInfo_3', 'InsuredInfo_4', 'InsuredInfo_5', 'InsuredInfo_6', 'InsuredInfo_7', 'Insurance_History_1', 'Insurance_History_2', 'Insurance_History_3', 'Insurance_History_4', 'Insurance_History_7', 'Insurance_History_8', 'Insurance_History_9', 'Family_Hist_1', 'Medical_History_2', 'Medical_History_3', 'Medical_History_4', 'Medical_History_5', 'Medical_History_6', 'Medical_History_7', 'Medical_History_8', 'Medical_History_9', 'Medical_History_11', 'Medical_History_12', 'Medical_History_13', 'Medical_History_14', 'Medical_History_16', 'Medical_History_17', 'Medical_History_18', 'Medical_History_19', 'Medical_History_20', 'Medical_History_21', 'Medical_History_22', 'Medical_History_23', 'Medical_History_25', 'Medical_History_26', 'Medical_History_27', 'Medical_History_28', 'Medical_History_29', 'Medical_History_30', 'Medical_History_31', 'Medical_History_33', 'Medical_History_34', 'Medical_History_35', 'Medical_History_36', 'Medical_History_37', 'Medical_History_38', 'Medical_History_39', 'Medical_History_40', 'Medical_History_41']
-for v in list_dummies:
-	dummies = pd.get_dummies(X[v], prefix=v+"_")
-	X = pd.concat([X, dummies], axis=1)
-	del X[v]
-pd.set_option('max_columns', None)
-print X.head()
+# #dummisation
+# list_dummies = ['Product_Info_1', 'Product_Info_2', 'Product_Info_3', 'Product_Info_5', 'Product_Info_6', 'Product_Info_7', 'Employment_Info_2', 'Employment_Info_3', 'Employment_Info_5', 'InsuredInfo_1', 'InsuredInfo_2', 'InsuredInfo_3', 'InsuredInfo_4', 'InsuredInfo_5', 'InsuredInfo_6', 'InsuredInfo_7', 'Insurance_History_1', 'Insurance_History_2', 'Insurance_History_3', 'Insurance_History_4', 'Insurance_History_7', 'Insurance_History_8', 'Insurance_History_9', 'Family_Hist_1', 'Medical_History_2', 'Medical_History_3', 'Medical_History_4', 'Medical_History_5', 'Medical_History_6', 'Medical_History_7', 'Medical_History_8', 'Medical_History_9', 'Medical_History_11', 'Medical_History_12', 'Medical_History_13', 'Medical_History_14', 'Medical_History_16', 'Medical_History_17', 'Medical_History_18', 'Medical_History_19', 'Medical_History_20', 'Medical_History_21', 'Medical_History_22', 'Medical_History_23', 'Medical_History_25', 'Medical_History_26', 'Medical_History_27', 'Medical_History_28', 'Medical_History_29', 'Medical_History_30', 'Medical_History_31', 'Medical_History_33', 'Medical_History_34', 'Medical_History_35', 'Medical_History_36', 'Medical_History_37', 'Medical_History_38', 'Medical_History_39', 'Medical_History_40', 'Medical_History_41']
+# for v in list_dummies:
+# 	dummies = pd.get_dummies(X[v], prefix=v+"_")
+# 	X = pd.concat([X, dummies], axis=1)
+# 	del X[v]
+# pd.set_option('max_columns', None)
+# # print X.head()
+# print X.columns
 
+new_X=Imputer().fit_transform(X)
+new_X_test=Imputer().fit_transform(X_test)
 
-# model = DecisionTreeRegressor()
-# model.fit(X, Y) # On fit le modèle sur le training set
-# Y_test = model.predict(X_test) # On effectue les prédictions sur le test set
+#modelling
+model = DecisionTreeRegressor()
+model.fit(new_X, Y) # On fit le modèle sur le training set
+Y_test = model.predict(new_X_test) # On effectue les prédictions sur le test set
+
+print Y_test
