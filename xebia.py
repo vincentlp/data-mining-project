@@ -102,9 +102,31 @@ print X_test.columns
 new_X=Imputer().fit_transform(X)
 new_X_test=Imputer().fit_transform(X_test)
 
+
+# #splitting
+# np.random.seed(seed=1234)
+# ind_train = np.random.choice(len(new_X),0.5*len(new_X),replace=False)
+# ind_val_test = list(set(range(len(new_X))) - set(ind_train))
+# ind_val = np.random.choice(ind_val_test,0.7*len(ind_val_test),replace=False)
+# ind_test = list(set(ind_val_test) - set(ind_val))
+# new_X, X_val, X_test, Y, Y_val, Y_test = new_X.iloc[ind_train], new_X.iloc
+# [ind_val], new_X.iloc[ind_test], Y.iloc[ind_train], Y.iloc[ind_val], Y.iloc[ind_test]
+
+
 #modelling
 model = DecisionTreeRegressor()
 model.fit(new_X, Y) # On fit le modèle sur le training set
-Y_test = model.predict(new_X_test) # On effectue les prédictions sur le test set
+prediction = model.predict(new_X_test) # On effectue les prédictions sur le test set
 
-print Y_test
+
+
+def rmse(obs, pred):
+	return np.sqrt(np.mean((obs-pred)**2))
+
+rmse_train = rmse(Y, model.predict(new_X))
+#rmse_test = rmse(Y_test, prediction)
+
+print "Train Error: %.2f" % rmse_train
+#print "Test Error: %.2f" % rmse_test
+
+#print Y_test
