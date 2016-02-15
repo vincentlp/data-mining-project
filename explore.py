@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # coding: latin-1
 import os, sys
+import pylab
 
 import pandas as pd
 from pandas import Series,DataFrame
@@ -66,18 +67,57 @@ test = pd.read_csv(open('data/test.csv', 'rb'), sep=',')
 # plt.show()
 
 
-# List all of the Insurance_History_5 values greater than 0.02  (Max is 1.0)
-print train["Insurance_History_5"][train["Insurance_History_5"]>0.03]
+# # List all of the Insurance_History_5 values greater than 0.02  (Max is 1.0)
+# print train["Insurance_History_5"][train["Insurance_History_5"]>0.03]
 
-fig, axis1 = plt.subplots(1,1,figsize=(20,5))
-train["Insurance_History_5"][train["Insurance_History_5"]<0.034].plot(kind='hist',bins=100,xlim=(0,0.05),ax=axis1, color="blue")
-axis1.set_xlabel("Insurance_History_5")
-axis1.set_ylabel("Count")
+# fig, axis1 = plt.subplots(1,1,figsize=(20,5))
+# train["Insurance_History_5"][train["Insurance_History_5"]<0.034].plot(kind='hist',bins=100,xlim=(0,0.05),ax=axis1, color="blue")
+# axis1.set_xlabel("Insurance_History_5")
+# axis1.set_ylabel("Count")
+# plt.show()
+
+
+
+
+# Plot distributions for Family_Hist_2, Family_Hist_3, Family_Hist_4, Family_Hist_5
+pylab.rcParams['figure.figsize'] = (12.0, 8.0)
+fig, axisArr = plt.subplots(2,2)
+train["Family_Hist_2"].plot(kind='hist',bins=100,xlim=(0,1),ax=axisArr[0,0], color="green")
+axisArr[0,0].set_xlabel("Family_Hist_2")
+axisArr[0,0].set_ylabel("Count")
+train["Family_Hist_3"].plot(kind='hist',bins=100,xlim=(0,1),ax=axisArr[0,1], color="green")
+axisArr[0,1].set_xlabel("Family_Hist_3")
+axisArr[0,1].set_ylabel("Count")
+
+train["Family_Hist_4"].plot(kind='hist',bins=100,xlim=(0,1),ax=axisArr[1,0], color="green")
+axisArr[1,0].set_xlabel("Family_Hist_4")
+axisArr[1,0].set_ylabel("Count")
+train["Family_Hist_5"].plot(kind='hist',bins=100,xlim=(0,1),ax=axisArr[1,1], color="green")
+axisArr[1,1].set_xlabel("Family_Hist_5")
+axisArr[1,1].set_ylabel("Count")
 plt.show()
 
-# fig = plt.pyplot.figure()
-# ax = fig.add_subplot(111)
-# ax.hist(train['Response'], bins = 10, range = (train['Response'].min(),train['Response'].max()))
-# plt.pyplot.title('Response distribution')
-# plt.pyplot.xlabel('Response')
-# plt.pyplot.ylabel('Count')
+
+# Plot distributions for Medical_History_1, Medical_History_10, Medical_History_15, Medical_History_24, Medical_History_32
+
+pylab.rcParams['figure.figsize'] = (12.0, 8.0)
+fig, axisArr = plt.subplots(2,2)
+train["Medical_History_1"].plot(kind='hist',bins=100,xlim=(0,250),ax=axisArr[0,0], color="brown")
+axisArr[0,0].set_xlabel("Medical_History_1")
+axisArr[0,0].set_ylabel("Count")
+train["Medical_History_10"].plot(kind='hist',bins=100,xlim=(0,250),ax=axisArr[0,1], color="brown")
+axisArr[0,1].set_xlabel("Medical_History_10")
+axisArr[0,1].set_ylabel("Count")
+
+train["Medical_History_15"].plot(kind='hist',bins=100,xlim=(0,250),ax=axisArr[1,0], color="brown")
+axisArr[1,0].set_xlabel("Medical_History_15")
+axisArr[1,0].set_ylabel("Count")
+train["Medical_History_25"].plot(kind='hist',bins=100,xlim=(0,250),ax=axisArr[1,1], color="brown")
+axisArr[1,1].set_xlabel("Medical_History_25")
+axisArr[1,1].set_ylabel("Count")
+plt.show()
+
+train["Medical_History_32"].plot(kind='hist',xlim=(0,250),bins=100, color="brown")
+plt.xlabel("Medical_History_32")
+plt.ylabel("Count")
+plt.show()
